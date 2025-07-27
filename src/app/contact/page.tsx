@@ -6,7 +6,7 @@ export default function ContactPage() {
       {/* Left side: image */}
       <div
         className="hidden md:block h-full bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/prod-all3.JPG')" }}
+        style={{ backgroundImage: "url('/images/prod-all3.jpg')" }}
       />
 
       {/* Right side: form */}

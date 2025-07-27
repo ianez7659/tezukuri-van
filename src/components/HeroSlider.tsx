@@ -5,10 +5,10 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
 const images = [
-  "/images/prod-all1.JPG",
-  "/images/prod-all2.JPG",
-  "/images/prod-all3.JPG",
-  "/images/prod-all4.JPG",
+  "/images/prod-all1.jpg",
+  "/images/prod-all2.jpg",
+  "/images/prod-all3.jpg",
+  "/images/prod-all4.jpg",
 ];
 
 export default function HeroSlider() {

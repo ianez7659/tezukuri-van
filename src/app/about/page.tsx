@@ -26,7 +26,7 @@ export default function AboutPage() {
         </div>
         <div>
           <img
-            src="/images/prod-all4.JPG"
+            src="/images/prod-all4.jpg"
             alt="Our workshop"
             className="w-full h-auto rounded-lg shadow"
           />
