@@ -5,11 +5,11 @@
     "brand": "Tezukuri Van",
     "category": "solar",
     "description": "Efficient monocrystalline panel for vanlife solar setups.",
-    "imageUrl": "/images/prod1-a.jpg",
+    "imageUrl": "/images/prod1-a.JPG",
     "galleryImages": [
-      "/images/prod1-b.jpg",
-      "/images/prod1-c.jpg",
-      "/images/prod1-d.jpg"
+      "/images/prod1-b.JPG",
+      "/images/prod1-c.JPG",
+      "/images/prod1-d.JPG"
     ],
     "price": 0,
     "inStock": false
@@ -20,11 +20,11 @@
     "brand": "Tezukuri Van",
     "category": "solar",
     "description": "Efficient monocrystalline panel for vanlife solar setups.",
-    "imageUrl": "/images/prod2-a.jpg",
+    "imageUrl": "/images/prod2-a.JPG",
     "galleryImages": [
-      "/images/prod2-b.jpg",
-      "/images/prod2-c.jpg",
-      "/images/prod2-d.jpg"
+      "/images/prod2-b.JPG",
+      "/images/prod2-c.JPG",
+      "/images/prod2-d.JPG"
     ],
     "price": 0,
     "inStock": true
@@ -35,11 +35,11 @@
     "brand": "Tezukuri Van",
     "category": "solar",
     "description": "Efficient monocrystalline panel for vanlife solar setups.",
-    "imageUrl": "/images/prod3-a.jpg",
+    "imageUrl": "/images/prod3-a.JPG",
     "galleryImages": [
-      "/images/prod3-b.jpg",
-      "/images/prod3-c.jpg",
-      "/images/prod3-d.jpg"
+      "/images/prod3-b.JPG",
+      "/images/prod3-c.JPG",
+      "/images/prod3-d.JPG"
     ],
     "price": 0,
     "inStock": true
@@ -50,12 +50,12 @@
     "brand": "Tezukuri Van",
     "category": "solar",
     "description": "Efficient monocrystalline panel for vanlife solar setups.",
-    "imageUrl": "/images/prod4-a.jpg",
+    "imageUrl": "/images/prod4-a.JPG",
     "galleryImages": [
-      "/images/prod4-b.jpg",
-      "/images/prod4-c.jpg",
-      "/images/prod4-d.jpg",
-      "/images/prod4-e.jpg"
+      "/images/prod4-b.JPG",
+      "/images/prod4-c.JPG",
+      "/images/prod4-d.JPG",
+      "/images/prod4-e.JPG"
     ],
     "price": 0,
     "inStock": false
@@ -66,11 +66,11 @@
     "brand": "Tezukuri Van",
     "category": "solar",
     "description": "Efficient monocrystalline panel for vanlife solar setups.",
-    "imageUrl": "/images/prod5-a.jpg",
+    "imageUrl": "/images/prod5-a.JPG",
     "galleryImages": [
-      "/images/prod5-b.jpg",
-      "/images/prod5-c.jpg",
-      "/images/prod5-d.jpg"
+      "/images/prod5-b.JPG",
+      "/images/prod5-c.JPG",
+      "/images/prod5-d.JPG"
     ],
     "price": 0,
     "inStock": true
@@ -81,8 +81,8 @@
     "brand": "Tezukuri Van",
     "category": "solar",
     "description": "Efficient monocrystalline panel for vanlife solar setups.",
-    "imageUrl": "/images/prod6-a.jpg",
-    "galleryImages": ["/images/prod6-b.jpg"],
+    "imageUrl": "/images/prod6-a.JPG",
+    "galleryImages": ["/images/prod6-b.JPG"],
     "price": 0,
     "inStock": true
   }
