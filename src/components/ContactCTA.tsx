@@ -16,7 +16,7 @@ export default function ContactCTA() {
         Have Any Questions?
       </h2>
       <p className="text-muted mb-6">
-        We&apos;re here to help you on your journey.
+        We are here to help you on your journey.
       </p>
       <Link
         href="/contact"

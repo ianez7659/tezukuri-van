@@ -8,7 +8,7 @@ import ValueSection from "@/components/ValueSection";
 import ContactCTA from "@/components/ContactCTA";
 
 export default function HomePage() {
-  const featured = products.slice(0, 3);
+  // const featured = products.slice(0, 3);
 
   return (
     <main className="bg-background text-foreground">

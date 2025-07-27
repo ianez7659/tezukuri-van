@@ -12,6 +12,8 @@ import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import "swiper/css/autoplay";
 
+import type { Swiper as SwiperClass } from "swiper";
+
 type Product = {
   id: string;
   name: string;
@@ -25,7 +27,7 @@ type Product = {
 export default function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
-  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
 
   useEffect(() => {
     const found = products.find((p) => p.id === id);
