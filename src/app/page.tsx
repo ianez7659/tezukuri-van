@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+// import Link from "next/link";
 import products from "@/data/products.json";
 import HeroSection from "@/components/HeroSection";
 import FeaturedProducts from "@/components/FeaturedProducts";

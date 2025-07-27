@@ -15,7 +15,9 @@ export default function ContactCTA() {
       <h2 className="text-2xl font-bold mb-4 text-heading">
         Have Any Questions?
       </h2>
-      <p className="text-muted mb-6">We're here to help you on your journey.</p>
+      <p className="text-muted mb-6">
+        We&apos;re here to help you on your journey.
+      </p>
       <Link
         href="/contact"
         className="bg-foreground text-background px-6 py-3 rounded hover-bg-muted transition"

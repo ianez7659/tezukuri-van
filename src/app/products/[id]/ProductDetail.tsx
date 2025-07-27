@@ -12,14 +12,24 @@ import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import "swiper/css/autoplay";
 
+type Product = {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  brand: string;
+  inStock: boolean;
+  galleryImages?: string[];
+};
+
 export default function ProductDetail() {
   const { id } = useParams();
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
 
   useEffect(() => {
     const found = products.find((p) => p.id === id);
-    setProduct(found);
+    setProduct(found || null);
   }, [id]);
 
   if (!product) return <p className="p-6">Loading...</p>;
