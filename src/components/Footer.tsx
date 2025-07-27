@@ -42,7 +42,7 @@ export default function Footer() {
           <ul className="space-y-1">
             <li>
               <a
-                href="https://instagram.com"
+                href="https://instagram.com/tezukuri_van?igsh=emhyMDlzZDB3Nmpj"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-subtle hover:underline"
