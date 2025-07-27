@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #ffffff;
+  --color-fg: #171717;
+  --color-muted: #6b7280;
+  --color-heading: #1f2937;
+  --color-border: #e5e7eb;
+}
+
+.dark {
+  --color-bg: #0a0a0a;
+  --color-fg: #ededed;
+  --color-muted: #9ca3af;
+  --color-heading: #f3f4f6;
+  --color-border: #374151;
+}
+
+.logo-dark {
+  display: none;
+}
+
+.dark .logo-light {
+  display: none;
+}
+
+.dark .logo-dark {
+  display: block;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .bg-background {
+    background-color: var(--color-bg);
+  }
+  .bg-foreground {
+    background-color: var(--color-fg);
+  }
+  .text-background {
+    color: var(--color-bg);
+  }
+  .text-foreground {
+    color: var(--color-fg);
+  }
+  .text-muted {
+    color: var(--color-muted);
+  }
+  .text-heading {
+    color: var(--color-heading);
+  }
+  .border-border {
+    border-color: var(--color-border);
+  }
+  .bg-border {
+    background-color: var(--color-border);
+  }
+  .bg-muted {
+    background-color: var(--color-muted);
+  }
+
+  .hover-bg-muted {
+    transition: background-color 0.2s ease;
+  }
+
+  .hover-bg-muted:hover {
+    background-color: var(--color-muted);
+  }
+}

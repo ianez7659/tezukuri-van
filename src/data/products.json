@@ -1,0 +1,89 @@
+[
+  {
+    "id": "1",
+    "name": "Candle Holder",
+    "brand": "Tezukuri Van",
+    "category": "solar",
+    "description": "Efficient monocrystalline panel for vanlife solar setups.",
+    "imageUrl": "/images/prod1-a.jpg",
+    "galleryImages": [
+      "/images/prod1-b.jpg",
+      "/images/prod1-c.jpg",
+      "/images/prod1-d.jpg"
+    ],
+    "price": 0,
+    "inStock": false
+  },
+  {
+    "id": "2",
+    "name": "Scented Candle Holder",
+    "brand": "Tezukuri Van",
+    "category": "solar",
+    "description": "Efficient monocrystalline panel for vanlife solar setups.",
+    "imageUrl": "/images/prod2-a.jpg",
+    "galleryImages": [
+      "/images/prod2-b.jpg",
+      "/images/prod2-c.jpg",
+      "/images/prod2-d.jpg"
+    ],
+    "price": 0,
+    "inStock": true
+  },
+  {
+    "id": "3",
+    "name": "Accessary Plate",
+    "brand": "Tezukuri Van",
+    "category": "solar",
+    "description": "Efficient monocrystalline panel for vanlife solar setups.",
+    "imageUrl": "/images/prod3-a.jpg",
+    "galleryImages": [
+      "/images/prod3-b.jpg",
+      "/images/prod3-c.jpg",
+      "/images/prod3-d.jpg"
+    ],
+    "price": 0,
+    "inStock": true
+  },
+  {
+    "id": "4",
+    "name": "Phone Holder",
+    "brand": "Tezukuri Van",
+    "category": "solar",
+    "description": "Efficient monocrystalline panel for vanlife solar setups.",
+    "imageUrl": "/images/prod4-a.jpg",
+    "galleryImages": [
+      "/images/prod4-b.jpg",
+      "/images/prod4-c.jpg",
+      "/images/prod4-d.jpg",
+      "/images/prod4-e.jpg"
+    ],
+    "price": 0,
+    "inStock": false
+  },
+  {
+    "id": "5",
+    "name": "Pen Holder",
+    "brand": "Tezukuri Van",
+    "category": "solar",
+    "description": "Efficient monocrystalline panel for vanlife solar setups.",
+    "imageUrl": "/images/prod5-a.jpg",
+    "galleryImages": [
+      "/images/prod5-b.jpg",
+      "/images/prod5-c.jpg",
+      "/images/prod5-d.jpg"
+    ],
+    "price": 0,
+    "inStock": true
+  },
+  {
+    "id": "6",
+    "name": "Flower Vase",
+    "brand": "Tezukuri Van",
+    "category": "solar",
+    "description": "Efficient monocrystalline panel for vanlife solar setups.",
+    "imageUrl": "/images/prod6-a.jpg",
+    "galleryImages": ["/images/prod6-b.jpg"],
+    "price": 0,
+    "inStock": true
+  }
+]
