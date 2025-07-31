@@ -3,6 +3,7 @@
 import Link from "next/link";
 import products from "@/data/products.json";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function FeaturedProducts() {
   const featured = products.slice(0, 3);
@@ -31,11 +32,16 @@ export default function FeaturedProducts() {
               href={`/products/${p.id}`}
               className="border border-border p-4 rounded shadow hover:shadow-lg transition block bg-background"
             >
-              <img
-                src={p.imageUrl}
-                alt={p.name}
-                className="w-full aspect-[4/3] object-cover rounded mb-4"
-              />
+              <div className="relative aspect-[4/3] mb-4 rounded overflow-hidden">
+                <Image
+                  src={p.imageUrl}
+                  alt={p.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  priority={i === 0}
+                />
+              </div>
               <h3 className="font-bold text-lg text-heading">{p.name}</h3>
               <p className="text-sm text-muted">{p.brand}</p>
             </Link>

@@ -40,7 +40,7 @@ export default function Header() {
             About
           </Link>
           <Link href="/products" className="hover:underline">
-            Product
+            Products
           </Link>
           <a href="/events" className="hover:underline">
             Events
@@ -102,7 +102,7 @@ export default function Header() {
           About
         </Link>
         <Link href="/products" className="hover:underline">
-          Product
+          Products
         </Link>
         <a href="/events" className="hover:underline">
           Events

@@ -3,12 +3,12 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
+import Image from "next/image";
 
 const images = [
-  "/images/prod-all1.jpg",
-  "/images/prod-all2.jpg",
-  "/images/prod-all3.jpg",
-  "/images/prod-all4.jpg",
+  "/images/prod-all2.webp",
+  "/images/prod-all3.webp",
+  "/images/prod-all4.webp",
 ];
 
 export default function HeroSlider() {
@@ -19,18 +19,24 @@ export default function HeroSlider() {
       slidesPerView={1}
       loop={true}
       autoplay={{
-        delay: 3000,
+        delay: 5000,
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
       }}
+      speed={1200}
     >
       {images.map((src, i) => (
         <SwiperSlide key={i}>
-          <img
-            src={src}
-            alt={`slide-${i}`}
-            className="w-full w-fullaspect-[4/3] h-64 md:h-120 object-cover rounded"
-          />
+          <div className="relative w-full aspect-[4/3] h-64 md:h-120 rounded overflow-hidden">
+            <Image
+              src={src}
+              alt={`slide-${i}`}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 768px"
+              priority={i === 0}
+            />
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>

@@ -6,17 +6,17 @@ export default function ContactPage() {
       {/* Left side: image */}
       <div
         className="hidden md:block h-full bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/prod-all3.jpg')" }}
+        style={{ backgroundImage: "url('/images/prod-all3.webp')" }}
       />
 
       {/* Right side: form */}
       <div className="flex flex-col items-center justify-center p-8 bg-background h-full">
         <span className="text-4xl font-bold mb-2 text-center text-muted">
-          Tezukuri Van
+          TEZUKURI VAN
         </span>
-        <p className="text-lg text-muted mb-0 text-center">is always</p>
-        <p className="text-lg text-muted mb-14 text-center">
-          Welcome to get in touch with you!
+
+        <p className="text-lg text-muted mt-6 mb-14 text-center">
+          would love to hear from you!
         </p>
 
         <div className="w-full max-w-lg">

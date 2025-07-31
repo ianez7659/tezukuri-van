@@ -1,5 +1,6 @@
 import Link from "next/link";
 import products from "@/data/products.json";
+import Image from "next/image";
 
 export default function ProductsPage() {
   return (
@@ -13,11 +14,15 @@ export default function ProductsPage() {
             href={`/products/${p.id}`}
             className="border p-4 rounded shadow hover:shadow-lg transition block"
           >
-            <img
-              src={p.imageUrl}
-              alt={p.name}
-              className="w-fullaspect-[4/3] object-cover rounded mb-4"
-            />
+            <div className="relative aspect-[4/3] mb-4 rounded overflow-hidden">
+              <Image
+                src={p.imageUrl}
+                alt={p.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
             <h2 className="font-bold text-lg">{p.name}</h2>
             <p className="text-sm text-gray-600">{p.brand}</p>
           </Link>

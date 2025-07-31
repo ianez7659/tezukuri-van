@@ -7,11 +7,9 @@ export default function Footer() {
         {/* Brand */}
         <div>
           <Link href="/" className="text-xl font-bold text-heading">
-            Tezukuri Van
+            TEZUKURI VAN
           </Link>
-          <p className="mt-2 text-muted">
-            Handcrafted modern wear for vanlife.
-          </p>
+          <p className="mt-2 text-muted">Handcrafted by us, for you</p>
         </div>
 
         {/* Navigation */}
@@ -26,11 +24,6 @@ export default function Footer() {
             <li>
               <Link href="/products" className="text-subtle hover:underline">
                 Products
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="text-subtle hover:underline">
-                Contact
               </Link>
             </li>
           </ul>
@@ -58,13 +51,18 @@ export default function Footer() {
                 Email Us
               </a>
             </li>
+            <li>
+              <Link href="/contact" className="text-subtle hover:underline">
+                Contact
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
 
       {/* Bottom */}
       <div className="text-center text-xs py-4 border-t border-border text-muted">
-        © {new Date().getFullYear()} Tezukuri Van. All rights reserved.
+        © {new Date().getFullYear()} TEZUKURI VAN. All rights reserved.
       </div>
     </footer>
   );

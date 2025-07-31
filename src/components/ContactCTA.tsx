@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 export default function ContactCTA() {
   return (
     <motion.section
-      className="py-20 px-6 bg-border text-center"
+      className="py-20 px-6 bg-background text-center"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -15,9 +15,7 @@ export default function ContactCTA() {
       <h2 className="text-2xl font-bold mb-4 text-heading">
         Have Any Questions?
       </h2>
-      <p className="text-muted mb-6">
-        We are here to help you on your journey.
-      </p>
+      <p className="text-muted mb-6">We would love to hear from you!</p>
       <Link
         href="/contact"
         className="bg-foreground text-background px-6 py-3 rounded hover-bg-muted transition"

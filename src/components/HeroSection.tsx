@@ -6,11 +6,10 @@ export default function HeroSection() {
     <section className="text-center py-16 md:py-10 px-2">
       <HeroSlider />
       <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold leading-tight tracking-tight">
-        Handcrafted Modern Wear
+        Handcrafted by Us, for You
       </h1>
       <p className="text-base sm:text-lg md:text-xl mt-6 mb-8 max-w-2xl mx-auto text-gray-600">
-        Tezukuri Van is a boutique for thoughtful, minimalist fashion. Designed
-        and made in Vancouver.
+        Designed and made in Vancouver.
       </p>
       <Link
         href="/products"

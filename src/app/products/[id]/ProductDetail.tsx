@@ -6,12 +6,14 @@ import products from "@/data/products.json";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Thumbs, FreeMode } from "swiper/modules";
+import { Autoplay, Thumbs, FreeMode, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import "swiper/css/autoplay";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 
+import Image from "next/image";
 import type { Swiper as SwiperClass } from "swiper";
 
 type Product = {
@@ -65,37 +67,59 @@ export default function ProductDetail() {
         thumbs={{ swiper: thumbsSwiper }}
         className="max-w-lg mb-6 mx-auto rounded-lg shadow"
       >
-        {images.map((img: string, i: number) => (
+        {images.map((img, i) => (
           <SwiperSlide key={i}>
-            <img
-              src={img}
-              alt={`${product.name} main ${i}`}
-              className="w-full h-auto rounded-lg"
-            />
+            <div className="relative w-full aspect-[4/3]">
+              <Image
+                src={img}
+                alt={`${product.name} main ${i}`}
+                fill
+                className="object-cover rounded-lg"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
 
       {/* Thumbnail Swiper */}
       <Swiper
-        modules={[FreeMode, Thumbs]}
+        modules={[FreeMode, Thumbs, Navigation]}
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
         slidesPerView={4}
         freeMode
         watchSlidesProgress
-        className="max-w-lg mx-auto"
+        navigation={{
+          nextEl: ".thumbs-next",
+          prevEl: ".thumbs-prev",
+        }}
+        className="max-w-lg mx-auto relative"
       >
-        {images.map((img: string, i: number) => (
+        {images.map((img, i) => (
           <SwiperSlide key={i}>
-            <img
-              src={img}
-              alt={`${product.name} thumbnail ${i}`}
-              className="w-full h-auto cursor-pointer rounded border hover:border-[3px] transition duration-200"
-            />
+            <div className="relative w-full aspect-square">
+              <Image
+                src={img}
+                alt={`${product.name} thumbnail ${i}`}
+                fill
+                className="object-cover cursor-pointer rounded border hover:border-[3px] transition duration-200"
+                sizes="25vw"
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* Navigation Arrows - only for desktop */}
+      <div className="hidden md:flex justify-between max-w-lg mx-auto mt-2 px-2">
+        <button className="thumbs-prev text-xl hover:text-blue-500">
+          <ChevronLeft size={30} />
+        </button>
+        <button className="thumbs-next text-xl hover:text-blue-500">
+          <ChevronRight size={30} />
+        </button>
+      </div>
 
       <p className="mt-6 font-semibold text-green-600 text-center">
         {product.inStock ? "In stock" : "Out of stock"}

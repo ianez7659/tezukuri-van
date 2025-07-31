@@ -22,7 +22,7 @@ export default function HomePage() {
       <AboutPreview />
 
       {/* Our Values */}
-      <ValueSection
+      {/* <ValueSection
         title="What We Value"
         className="bg-background"
         values={[
@@ -42,7 +42,7 @@ export default function HomePage() {
               "Each product is a result of skill, intention, and care. We believe in the art of making, where every detail is thoughtfully considered.",
           },
         ]}
-      />
+      /> */}
 
       {/* Contact CTA */}
       <ContactCTA />
