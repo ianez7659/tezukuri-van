@@ -24,11 +24,11 @@ export default function AboutPage() {
           <p className="text-muted leading-relaxed">
             Every item is designed and made by hand in Vancouver, Canada by us.
             We do this purely for the fun of it (which is an economically
-            questionable practice), which means that we don't always have a ton
+            questionable practice), which means that we do not always have a ton
             of stock on hand. Your best bet is to find us at a local craft fair
             (check the Events page for more info) or, if you see something you
-            like, shoot us a message! We're more than happy to work with you on
-            custom orders if we're out of stock.
+            like, shoot us a message! We are more than happy to work with you on
+            custom orders if we are out of stock.
           </p>
         </div>
         <div className="relative w-full aspect-[4/3]">
