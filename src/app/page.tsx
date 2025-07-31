@@ -4,7 +4,7 @@
 import HeroSection from "@/components/HeroSection";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import AboutPreview from "@/components/AboutPreview";
-import ValueSection from "@/components/ValueSection";
+// import ValueSection from "@/components/ValueSection";
 import ContactCTA from "@/components/ContactCTA";
 
 export default function HomePage() {
