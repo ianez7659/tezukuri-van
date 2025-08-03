@@ -32,8 +32,8 @@ export default function HeroSlider() {
               src={src}
               alt={`slide-${i}`}
               fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 768px"
+              className="object-cover md:px-12"
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 100vw"
               priority={i === 0}
             />
           </div>
