@@ -15,7 +15,7 @@
       "/images/prod1-g.webp"
     ],
     "price": 0,
-    "inStock": false
+    "inStock": true
   },
   {
     "id": "2",
@@ -31,7 +31,7 @@
       "/images/prod4-e.webp"
     ],
     "price": 0,
-    "inStock": false
+    "inStock": true
   },
   {
     "id": "3",
@@ -79,7 +79,7 @@
     "name": "Ring Cone",
     "brand": "TEZUKURI VAN",
     "category": "solar",
-    "description": "Efficient monocrystalline panel for vanlife solar setups.",
+    "description": "Use it on its own, or with the removable brass hanger to keep all your jewelry nice and close.",
     "imageUrl": "/images/ring-cone-a.webp",
     "galleryImages": [
       "/images/ring-cone-b.webp",
@@ -96,7 +96,7 @@
     "name": "Round Tray",
     "brand": "TEZUKURI VAN",
     "category": "solar",
-    "description": "Efficient monocrystalline panel for vanlife solar setups.",
+    "description": "If the hex tray is too edgy for you, here's something nice and round.",
     "imageUrl": "/images/round-tray-a.webp",
     "galleryImages": ["/images/round-tray-b.webp", "/images/round-tray-c.webp"],
     "price": 0,
