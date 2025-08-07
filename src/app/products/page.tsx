@@ -1,8 +1,19 @@
-import Link from "next/link";
-import products from "@/data/products.json";
 import Image from "next/image";
+import Link from "next/link";
+import { createServerClient } from "@/lib/supabaseClientServer";
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const supabase = createServerClient();
+  const { data: products, error } = await supabase
+    .from("products")
+    .select("*")
+    .order("id", { ascending: false });
+
+  if (error) {
+    console.error("Failed to fetch products:", error.message);
+    return <p>Error loading products</p>;
+  }
+
   return (
     <div className="bg-background text-foreground py-16 px-6 md:px-24">
       <h1 className="text-3xl font-semibold mb-8">Our Products</h1>
@@ -16,7 +27,7 @@ export default function ProductsPage() {
           >
             <div className="relative aspect-[4/3] mb-4 rounded overflow-hidden">
               <Image
-                src={p.imageUrl}
+                src={p.image_url}
                 alt={p.name}
                 fill
                 className="object-cover"

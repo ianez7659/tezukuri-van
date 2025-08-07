@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import products from "@/data/products.json";
+import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,7 +12,6 @@ import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import "swiper/css/autoplay";
 import { ChevronRight, ChevronLeft } from "lucide-react";
-
 import Image from "next/image";
 import type { Swiper as SwiperClass } from "swiper";
 
@@ -20,10 +19,10 @@ type Product = {
   id: string;
   name: string;
   description: string;
-  imageUrl: string;
+  image_url: string;
   brand: string;
-  inStock: boolean;
-  galleryImages?: string[];
+  in_stock: boolean;
+  gallery_images: string[];
 };
 
 export default function ProductDetail() {
@@ -32,13 +31,28 @@ export default function ProductDetail() {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
 
   useEffect(() => {
-    const found = products.find((p) => p.id === id);
-    setProduct(found || null);
+    if (!id) return;
+
+    const fetchProduct = async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error) {
+        console.error("Failed to fetch product:", error.message);
+      } else {
+        setProduct(data);
+      }
+    };
+
+    fetchProduct();
   }, [id]);
 
   if (!product) return <p className="p-6">Loading...</p>;
 
-  const images = [product.imageUrl, ...(product.galleryImages || [])];
+  const images = [product.image_url, ...(product.gallery_images || [])];
 
   return (
     <motion.div
@@ -57,7 +71,6 @@ export default function ProductDetail() {
       <h1 className="text-3xl font-bold text-heading mb-2">{product.name}</h1>
       <p className="text-muted mb-4">{product.description}</p>
 
-      {/* Main Swiper */}
       <Swiper
         modules={[Autoplay, Thumbs]}
         spaceBetween={10}
@@ -82,7 +95,6 @@ export default function ProductDetail() {
         ))}
       </Swiper>
 
-      {/* Thumbnail Swiper */}
       <Swiper
         modules={[FreeMode, Thumbs, Navigation]}
         onSwiper={setThumbsSwiper}
@@ -111,7 +123,6 @@ export default function ProductDetail() {
         ))}
       </Swiper>
 
-      {/* Navigation Arrows - only for desktop */}
       <div className="hidden md:flex justify-between max-w-lg mx-auto mt-2 px-2">
         <button className="thumbs-prev text-xl hover:text-blue-500">
           <ChevronLeft size={30} />
@@ -122,7 +133,7 @@ export default function ProductDetail() {
       </div>
 
       <p className="mt-6 font-semibold text-green-600 text-center">
-        {product.inStock ? "In stock" : "Out of stock"}
+        {product.in_stock ? "In stock" : "Out of stock"}
       </p>
     </motion.div>
   );
