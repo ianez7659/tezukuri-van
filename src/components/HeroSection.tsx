@@ -3,7 +3,7 @@ import HeroSlider from "./HeroSlider";
 
 export default function HeroSection() {
   return (
-    <section className="text-center py-16 md:py-10 px-2">
+    <section className="text-center py-16 md:py-0 px-2">
       <HeroSlider />
       <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold leading-tight tracking-tight">
         Handcrafted by Us, for You

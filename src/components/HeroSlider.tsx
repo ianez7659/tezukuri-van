@@ -18,21 +18,21 @@ export default function HeroSlider() {
       spaceBetween={20}
       slidesPerView={1}
       loop={true}
-      autoplay={{
-        delay: 5000,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true,
-      }}
-      speed={1200}
+      // autoplay={{
+      //   delay: 5000,
+      //   disableOnInteraction: false,
+      //   pauseOnMouseEnter: true,
+      // }}
+      // speed={1200}
     >
       {images.map((src, i) => (
         <SwiperSlide key={i}>
-          <div className="relative w-full aspect-[4/3] h-64 md:h-120 rounded overflow-hidden">
+          <div className="relative w-full h-64 md:h-130 rounded overflow-hidden">
             <Image
               src={src}
               alt={`slide-${i}`}
               fill
-              className="object-cover md:px-12"
+              className="object-cover md:scale-90"
               sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 100vw"
               priority={i === 0}
             />
