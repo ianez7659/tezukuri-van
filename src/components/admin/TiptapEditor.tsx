@@ -83,15 +83,12 @@ export default function TiptapEditor({ content, onChange }: Props) {
         .from("product-images")
         .getPublicUrl(filePath);
 
-      editor
-        ?.chain()
-        .focus()
-        .insertCustomImage({
-          src: data?.publicUrl,
-          width: "300px",
-          align: "center",
-        })
-        .run();
+      editor?.commands.focus();
+      editor?.commands.insertCustomImage({
+        src: data?.publicUrl ?? "",
+        width: "300px",
+        align: "center",
+      });
     },
     [editor]
   );

@@ -1,7 +1,7 @@
 import { Node, mergeAttributes, CommandProps } from "@tiptap/core";
 
 declare module "@tiptap/core" {
-  interface Commands<ReturnType = any> {
+  interface Commands<ReturnType> {
     customImage: {
       insertCustomImage: (attrs: {
         src: string;
@@ -27,7 +27,7 @@ export const CustomImage = Node.create({
       alt: { default: null },
       title: { default: null },
       width: { default: "300px" },
-      // align: { default: "center" },
+      // align: { default: "center" }, // 나중에 필요 시 추가
     };
   },
 
@@ -56,35 +56,30 @@ export const CustomImage = Node.create({
       "div",
       {
         style: `
-        text-align: center;
-        margin: 1rem 0;
-      `,
+          text-align: center;
+          margin: 1rem 0;
+        `,
       },
       [
         "img",
         mergeAttributes(HTMLAttributes, {
           "data-custom-image": "true",
           style: `
-          width: ${width};
-          max-width: 100%;
-          height: auto;
-          border-radius: 4px;
-          display: inline-block;
-        `,
+            width: ${width};
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: inline-block;
+          `,
         }),
       ],
     ];
   },
+
   addCommands() {
     return {
       insertCustomImage:
-        (attrs: {
-          src: string;
-          alt?: string;
-          title?: string;
-          width?: string;
-          align?: string;
-        }) =>
+        (attrs) =>
         ({ commands }: CommandProps) => {
           return commands.insertContent({
             type: "customImage",

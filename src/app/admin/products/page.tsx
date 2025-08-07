@@ -35,7 +35,7 @@ const emptyProduct: Product = {
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
   const { user, loading: userLoading } = useUser();
@@ -60,7 +60,7 @@ export default function ProductsPage() {
         } else {
           setProducts(data);
         }
-        setLoading(false);
+        // setLoading(false);
       };
 
       fetchProducts();

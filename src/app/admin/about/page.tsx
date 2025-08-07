@@ -7,6 +7,11 @@ import { supabase } from "@/lib/supabaseClient";
 import { ImagePlus } from "lucide-react";
 import Link from "next/link";
 
+type ValueItem = {
+  title: string;
+  description: string;
+};
+
 type AboutSection = {
   id: string;
   section: "hero" | "intro" | "values";
@@ -16,21 +21,7 @@ type AboutSection = {
   value_items?: { title: string; description: string }[] | null;
 };
 
-const defaultValues = {
-  hero: {
-    title: "",
-    content: "",
-  },
-  intro: {
-    title: "",
-    content: "",
-    image_url: "",
-  },
-  values: {
-    title: "",
-    value_items: [],
-  },
-};
+type SectionFieldValue = string | boolean | ValueItem[] | null;
 
 export default function AdminAboutPage() {
   const { user, loading: authLoading } = useUser();
@@ -65,7 +56,11 @@ export default function AdminAboutPage() {
     fetchSections();
   }, []);
 
-  const handleChange = (section: string, field: string, value: any) => {
+  const handleChange = (
+    section: string,
+    field: string,
+    value: SectionFieldValue
+  ) => {
     setSections((prev) => ({
       ...prev,
       [section]: {

@@ -1,6 +1,6 @@
 import { createServerClient } from "@/lib/supabaseClientServer";
 import { notFound } from "next/navigation";
-import type { ComponentType, ReactNode } from "react";
+// import type { ComponentType, ReactNode } from "react";
 import AnimatedEvents from "@/components/AnimatedEvents";
 
 export default async function EventsPage() {
