@@ -12,7 +12,7 @@ export async function POST(req: Request) {
       to: "ianez7659@gmail.com", // Replace with your email
       subject: `New contact form submission from ${name}`,
       replyTo: email,
-      text: message,
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     });
 
     return NextResponse.json({ status: "ok", data });
