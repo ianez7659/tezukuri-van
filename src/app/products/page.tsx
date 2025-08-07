@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { createServerClient } from "@/lib/supabaseClientServer";
 
+export const revalidate = 10; // Revalidate every 10 seconds
+
 export default async function ProductsPage() {
   const supabase = createServerClient();
   const { data: products, error } = await supabase

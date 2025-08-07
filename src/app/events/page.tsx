@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 // import type { ComponentType, ReactNode } from "react";
 import AnimatedEvents from "@/components/AnimatedEvents";
 
+export const revalidate = 10;
+
 export default async function EventsPage() {
   const supabase = createServerClient();
   const { data: events, error } = await supabase

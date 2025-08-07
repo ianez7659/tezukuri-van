@@ -2,6 +2,8 @@ import { createServerClient } from "@/lib/supabaseClientServer";
 import Image from "next/image";
 import ValueSection from "@/components/ValueSection";
 
+export const revalidate = 10;
+
 export default async function AboutPage() {
   const supabase = createServerClient();
 
