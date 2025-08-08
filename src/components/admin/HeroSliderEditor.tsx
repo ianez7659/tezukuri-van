@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { ImagePlus } from "lucide-react";
+import { revalidateHomePage } from "@/lib/actions";
 
 type Props = { initialImages: string[] };
 
@@ -17,9 +18,14 @@ export default function HeroSliderEditor({ initialImages }: Props) {
       .from("home_sections")
       .update({ image_urls: images })
       .eq("key", "hero");
+
     setBusy(false);
     if (error) return alert(error.message);
-    alert("Saved!");
+
+    // Revalidate the home page after saving
+    await revalidateHomePage();
+
+    alert("Saved! Main page revalidated.");
   };
 
   const onUpload = async (file: File) => {
@@ -28,10 +34,12 @@ export default function HeroSliderEditor({ initialImages }: Props) {
     const { error } = await supabase.storage
       .from("product-images")
       .upload(path, file);
+
     if (error) {
       setBusy(false);
       return alert("Upload failed: " + error.message);
     }
+
     const { data } = supabase.storage.from("product-images").getPublicUrl(path);
     setImages((prev) => [...prev, data.publicUrl]);
     setBusy(false);
