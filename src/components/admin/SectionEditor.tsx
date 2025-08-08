@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import TipTapEditor from "./TiptapEditor";
+import { revalidateHomePage } from "@/lib/actions";
 
 type SectionData = {
   key: string;
@@ -24,6 +25,9 @@ export default function SectionEditor({ section }: { section: SectionData }) {
 
     if (error) {
       alert("Error saving: " + error.message);
+    } else {
+      await revalidateHomePage();
+      alert("Saved! Main page revalidated.");
     }
 
     setSaving(false);
