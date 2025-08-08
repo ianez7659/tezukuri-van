@@ -4,7 +4,12 @@ import { useUser } from "@/hooks/useUser";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
-import { PackageCheckIcon, Calendar1, BookOpenCheck } from "lucide-react";
+import {
+  PackageCheckIcon,
+  Calendar1,
+  BookOpenCheck,
+  HomeIcon,
+} from "lucide-react";
 
 export default function AdminDashboard() {
   const { user, loading } = useUser();
@@ -18,6 +23,14 @@ export default function AdminDashboard() {
       <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
 
       <ul className="space-y-2">
+        <li>
+          <Link
+            href="/admin/home"
+            className="flex gap-2 items-center text-2xl hover:bg-black hover:text-white px-2 py-2 rounded"
+          >
+            <HomeIcon size={25} /> Manage Home Page
+          </Link>
+        </li>
         <li>
           <Link
             href="/admin/products"
