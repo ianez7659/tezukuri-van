@@ -8,4 +8,5 @@ export type Product = {
   gallery_images: string[];
   price: number;
   in_stock: boolean;
+  order?: number;
 };

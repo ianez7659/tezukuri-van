@@ -25,7 +25,7 @@ export default function ProductForm({
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "price" ? parseFloat(value) : value,
+      [name]: name === "price" || name === "order" ? parseFloat(value) : value,
     }));
   };
 
@@ -61,6 +61,7 @@ export default function ProductForm({
       brand: "TEZUKURI VAN",
       category: formData.category,
       in_stock: formData.in_stock,
+      order: formData.order ?? 0,
     };
 
     let error = null;
@@ -145,6 +146,19 @@ export default function ProductForm({
           className="w-full border px-2 py-1 rounded"
         />
       </div> */}
+
+      {/* Order field */}
+      <div className="mb-2">
+        <label className="block text-sm">Display Order</label>
+        <input
+          type="number"
+          name="order"
+          value={formData.order ?? 0}
+          onChange={handleChange}
+          className="w-full border px-2 py-1 rounded"
+          placeholder="Display order (lower numbers appear first)"
+        />
+      </div>
 
       {/* inStock field */}
       <div className="mb-4">

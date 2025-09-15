@@ -8,20 +8,33 @@ export default async function ProductsPage() {
   const supabase = createServerClient();
   const { data: products, error } = await supabase
     .from("products")
-    .select("*")
-    .order("id", { ascending: false });
+    .select("*");
 
   if (error) {
     console.error("Failed to fetch products:", error.message);
     return <p>Error loading products</p>;
   }
 
+  // Sort products by order, then by id for products without order
+  const sortedProducts = products.sort((a, b) => {
+    if (a.order && b.order) {
+      return a.order - b.order;
+    }
+    if (a.order && !b.order) {
+      return -1;
+    }
+    if (!a.order && b.order) {
+      return 1;
+    }
+    return a.id.localeCompare(b.id);
+  });
+
   return (
     <div className="bg-background text-foreground py-16 px-6 md:px-24">
       <h1 className="text-3xl font-semibold mb-8">Our Products</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {products.map((p) => (
+        {sortedProducts.map((p) => (
           <Link
             key={p.id}
             href={`/products/${p.id}`}

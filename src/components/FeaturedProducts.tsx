@@ -1,11 +1,71 @@
 "use client";
 
 import Link from "next/link";
-import products from "@/data/products.json";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+type Product = {
+  id: string;
+  name: string;
+  brand: string;
+  image_url: string;
+  order?: number;
+};
+
 export default function FeaturedProducts() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .select("id, name, brand, image_url, order");
+
+        if (error) {
+          console.error("Error fetching products:", error);
+          return;
+        }
+
+        // Sort products by order, then by id for products without order
+        const sortedProducts = data.sort((a, b) => {
+          if (a.order && b.order) {
+            return a.order - b.order;
+          }
+          if (a.order && !b.order) {
+            return -1;
+          }
+          if (!a.order && b.order) {
+            return 1;
+          }
+          return a.id.localeCompare(b.id);
+        });
+
+        setProducts(sortedProducts);
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-16 px-6 md:px-24">
+        <h2 className="text-2xl font-semibold mb-6 text-center text-heading">
+          Featured Products
+        </h2>
+        <div className="text-center">Loading...</div>
+      </section>
+    );
+  }
+
   const featured = products.slice(0, 3);
 
   return (
@@ -34,7 +94,7 @@ export default function FeaturedProducts() {
             >
               <div className="relative aspect-[4/3] mb-4 rounded overflow-hidden">
                 <Image
-                  src={p.imageUrl}
+                  src={p.image_url}
                   alt={p.name}
                   fill
                   className="object-cover"
