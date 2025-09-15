@@ -319,7 +319,7 @@ export default function ProductOrderManager({ onOrderChanged }: ProductOrderMana
 
       {hasChanges && (
         <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-800">
-          You have unsaved changes. Click "Save Order" to apply them.
+          You have unsaved changes. Click &quot;Save Order&quot; to apply them.
         </div>
       )}
     </div>
