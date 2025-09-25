@@ -10,7 +10,7 @@ type Props = {
 export default function AnimatedEvents({ children }: Props) {
   return (
     <motion.main
-      className="min-h-screen px-6 py-20 md:px-24 bg-background text-foreground"
+      className="min-h-screen px-0 py-20 md:px-10 bg-background text-foreground"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

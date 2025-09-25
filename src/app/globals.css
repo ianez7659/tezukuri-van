@@ -20,6 +20,77 @@
   }
 }
 
+/* Custom Image Container Mobile Responsive */
+@media (max-width: 768px) {
+  .custom-image-container {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  
+  .custom-image-container img[data-custom-image="true"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-shrink: 1 !important;
+  }
+  
+  .custom-image-container div[data-text-content="true"] {
+    width: 100% !important;
+    min-width: auto !important;
+    flex: none !important;
+  }
+}
+
+/* Additional styles for CustomImage in content areas */
+.custom-image-container {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+  align-items: flex-start;
+}
+
+.custom-image-container img[data-custom-image="true"] {
+  width: 45%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.custom-image-container div[data-text-content="true"] {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.5rem;
+  line-height: 1.6;
+  font-size: 1.125rem !important;
+  outline: none;
+  border: 1px transparent solid;
+  border-radius: 4px;
+  min-height: 100px;
+  cursor: text;
+  transition: border-color 0.2s;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Force text size for CustomImage text content */
+.custom-image-container div[data-text-content="true"],
+div[data-text-content="true"] {
+  font-size: 1.125rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Editor text size */
+.editor-wrapper .ProseMirror {
+  font-size: 1.125rem !important;
+  line-height: 1.6 !important;
+}
+
+.editor-wrapper .ProseMirror p {
+  font-size: 1.125rem !important;
+  line-height: 1.6 !important;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

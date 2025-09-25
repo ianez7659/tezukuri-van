@@ -34,8 +34,8 @@ export default async function EventsPage() {
               key={event.id}
               className="border rounded p-4 shadow bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
             >
-              <h2 className="text-xl font-semibold mb-2">{event.title}</h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+              <h2 className="text-2xl font-semibold mb-2">{event.title}</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-400 mb-2">
                 Starting at {new Date(event.start_date).toLocaleString()} ~{" "}
                 {new Date(event.end_date).toLocaleString()}
               </p>
@@ -47,7 +47,7 @@ export default async function EventsPage() {
                 />
               )}
               <div
-                className="prose dark:prose-invert text-sm max-w-none"
+                className="prose dark:prose-invert text-sm max-w-none text-muted leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: event.description }}
               />
             </div>
