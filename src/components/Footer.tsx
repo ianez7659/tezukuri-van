@@ -45,7 +45,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="mailto:hello@tezukurivan.com"
+                href="mailto:tezukurivan@gmail.com"
                 className="text-subtle hover:underline"
               >
                 Email Us

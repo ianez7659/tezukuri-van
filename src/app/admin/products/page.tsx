@@ -18,7 +18,6 @@ type Product = {
   description: string;
   image_url: string;
   gallery_images: string[];
-  price: number;
   in_stock: boolean;
   order?: number;
 };
@@ -31,7 +30,6 @@ const emptyProduct: Product = {
   category: "",
   image_url: "",
   gallery_images: [],
-  price: 0,
   in_stock: true,
   order: 0,
 };
@@ -233,7 +231,6 @@ export default function ProductsPage() {
                 <>
                   <h2 className="text-lg font-semibold mb-1">{p.name}</h2>
                   <p className="text-sm text-gray-600 mb-2">{p.description}</p>
-                  <p className="text-sm mb-2">$ {p.price}</p>
                   <p className="text-xs text-gray-500 mb-2">Order: {p.order ?? 'Not set'}</p>
 
                   <Image

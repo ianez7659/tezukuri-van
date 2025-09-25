@@ -25,7 +25,7 @@ export default function ProductForm({
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "price" || name === "order" ? parseFloat(value) : value,
+      [name]: name === "order" ? parseFloat(value) : value,
     }));
   };
 
@@ -55,7 +55,6 @@ export default function ProductForm({
     const productData = {
       name: formData.name,
       description: formData.description,
-      price: formData.price,
       image_url: formData.image_url,
       gallery_images: formData.gallery_images,
       brand: "TEZUKURI VAN",
@@ -120,17 +119,6 @@ export default function ProductForm({
         <textarea
           name="description"
           value={formData.description}
-          onChange={handleChange}
-          className="w-full border px-2 py-1 rounded"
-        />
-      </div>
-
-      <div className="mb-2">
-        <label className="block text-sm">Price</label>
-        <input
-          type="number"
-          name="price"
-          value={formData.price ?? 0}
           onChange={handleChange}
           className="w-full border px-2 py-1 rounded"
         />

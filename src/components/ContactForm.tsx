@@ -12,18 +12,26 @@ export default function ContactForm() {
     e.preventDefault();
     setStatus("loading");
 
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(form),
-    });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-    if (res.ok) {
-      setStatus("success");
-      setForm({ name: "", email: "", message: "" });
-    } else {
+      const data = await res.json();
+
+      if (res.ok) {
+        setStatus("success");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        console.error("Contact form error:", data);
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error("Contact form network error:", error);
       setStatus("error");
     }
   }

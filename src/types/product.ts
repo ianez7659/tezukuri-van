@@ -6,7 +6,6 @@ export type Product = {
   description: string;
   image_url: string;
   gallery_images: string[];
-  price: number;
   in_stock: boolean;
   order?: number;
 };
