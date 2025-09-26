@@ -243,10 +243,12 @@ export default function ProductsPage() {
 
                   <div className="flex flex-wrap gap-2 mb-2">
                     {p.gallery_images?.map((img, i) => (
-                      <img
+                      <Image
                         key={i}
                         src={img}
                         alt={`gallery-${i}`}
+                        width={80}
+                        height={80}
                         className="w-20 h-auto border rounded"
                       />
                     ))}

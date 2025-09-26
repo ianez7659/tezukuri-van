@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import EventForm from "@/components/admin/EventForm";
 import { Plus, Edit, Trash } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 type Event = {
   id: string;
@@ -137,9 +138,11 @@ export default function AdminEventsPage() {
                 {event.start_date} ~ {event.end_date}
               </p>
               {event.image_url && (
-                <img
+                <Image
                   src={event.image_url}
                   alt={event.title}
+                  width={300}
+                  height={200}
                   className="w-full max-w-sm rounded mb-2"
                 />
               )}
