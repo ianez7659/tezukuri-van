@@ -109,7 +109,7 @@ export default function TiptapEditor({ content, onChange }: Props) {
       } else {
         // If no image is selected, try to find and update the last inserted image
         const { tr } = state;
-        const customImageNodes: any[] = [];
+        const customImageNodes: Array<{ node: { type: { name: string }; attrs: Record<string, unknown> }; pos: number }> = [];
         
         tr.doc.descendants((node, pos) => {
           if (node.type.name === "customImage") {
