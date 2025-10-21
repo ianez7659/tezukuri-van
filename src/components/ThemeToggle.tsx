@@ -6,6 +6,11 @@ export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
+    // Force light mode on initial load, ignore system preference
+    document.documentElement.classList.remove("dark");
+    setIsDark(false);
+    
+    // Only apply dark mode if explicitly set by user
     if (localStorage.theme === "dark") {
       document.documentElement.classList.add("dark");
       setIsDark(true);

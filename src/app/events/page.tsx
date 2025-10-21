@@ -28,28 +28,55 @@ export default async function EventsPage() {
           No events found. Please check back soon!
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-6  ">
+        <div className="grid grid-cols-1 gap-8">
           {events.map((event) => (
             <div
               key={event.id}
-              className="border rounded p-4 shadow bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+              className="border rounded-lg p-6 shadow bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
             >
-              <h2 className="text-2xl font-semibold mb-2">{event.title}</h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 mb-2">
-                Starting at {new Date(event.start_date).toLocaleString()} ~{" "}
-                {new Date(event.end_date).toLocaleString()}
-              </p>
-              {event.image_url && (
-                <img
-                  src={event.image_url}
-                  alt={event.title}
-                  className="w-full h-48 object-cover rounded mb-2"
-                />
-              )}
-              <div
-                className="prose dark:prose-invert text-sm max-w-none text-muted leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: event.description }}
-              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* image column */}
+                <div className="order-2 md:order-1">
+                  {event.image_url ? (
+                    <img
+                      src={event.image_url}
+                      alt={event.title}
+                      className="w-full h-64 md:h-80 object-cover rounded-lg"
+                    />
+                  ) : (
+                    <div className="w-full h-64 md:h-80 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                      <span className="text-gray-500 dark:text-gray-400">No Image</span>
+                    </div>
+                  )}
+                </div>
+                
+                {/* text column */}
+                <div className="order-1 md:order-2 flex flex-col justify-center">
+                  <h2 className="text-2xl md:text-3xl font-bold">{event.title}</h2>
+                  
+                  <p className="mb-6 font-bold text-lg text-black">
+                    {new Date(event.start_date).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      hour12: true
+                    })} ~{" "}
+                    {new Date(event.end_date).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      hour12: true
+                    })}
+                  </p>
+                  
+                  <div
+                    className="event-description text-base text-gray-700 dark:text-gray-300 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: event.description }}
+                  />
+                </div>
+              </div>
             </div>
           ))}
         </div>

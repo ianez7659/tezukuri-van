@@ -2,6 +2,7 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { CustomImage } from "@/extensions/CustomImage";
@@ -12,10 +13,10 @@ import {
   AlignLeft,
   AlignRight,
   ImagePlus,
-  Layout,
-  Columns,
-  ArrowLeft,
-  ArrowRight,
+  Bold,
+  Italic,
+  Underline as UnderlineIcon,
+  Strikethrough,
 } from "lucide-react";
 
 type Props = {
@@ -28,6 +29,7 @@ export default function TiptapEditor({ content, onChange }: Props) {
   const [selectedLayout, setSelectedLayout] = useState("single");
   const [selectedPosition, setSelectedPosition] = useState("left");
   const [textContent, setTextContent] = useState("");
+  const [plainText, setPlainText] = useState("");
 
   const editor = useEditor({
     extensions: [
@@ -37,93 +39,57 @@ export default function TiptapEditor({ content, onChange }: Props) {
             class: "text-lg",
           },
         },
+        hardBreak: {
+          HTMLAttributes: {
+            class: "break-line",
+          },
+        },
       }),
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
+      Underline,
       CustomImage,
     ],
     content,
+    immediatelyRender: false,
     onUpdate({ editor }) {
       onChange(editor.getHTML());
     },
     editorProps: {
       attributes: {
-        class: "min-h-[200px] border p-2 rounded",
+        class:
+          "event-description focus:outline-none min-h-[200px] p-4 border rounded text-base leading-relaxed",
+      },
+      handleKeyDown: (view, event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          // Insert a hard break instead of paragraph
+          const { state, dispatch } = view;
+          const { selection } = state;
+          
+          const tr = state.tr.replaceSelectionWith(state.schema.nodes.hardBreak.create());
+          dispatch(tr);
+          return true;
+        }
+        return false;
       },
     },
-    immediatelyRender: false,
   });
 
-  // Selected image width state
-  useEffect(() => {
-    if (!editor) return;
-
-    const handleSelectionChange = () => {
-      const selection = editor.state.selection;
-
-      if (
-        selection instanceof NodeSelection &&
-        selection.node.type.name === "customImage"
-      ) {
-        const attrs = selection.node.attrs;
-        const widthPx = parseInt(attrs.width?.replace("px", "") || "300");
-        setSelectedWidth(widthPx.toString());
-        setSelectedLayout(attrs.layout || "single");
-        setSelectedPosition(attrs.position || "left");
-        setTextContent(attrs.textContent || "");
-      }
-    };
-
-    editor.on("selectionUpdate", handleSelectionChange);
-
-    return () => {
-      editor.off("selectionUpdate", handleSelectionChange);
-    };
-  }, [editor]);
-
   const updateImageAttrs = useCallback(
-    (
-      attrs: Partial<{
-        align: string;
-        width: string;
-        layout: string;
-        position: string;
-        textContent: string;
-      }>
-    ) => {
+    (attrs: Record<string, any>) => {
       if (!editor) return;
 
-      const { state, commands } = editor;
-      const selection = state.selection;
+      const { state, view } = editor;
+      const { selection } = state;
 
-      // Only update if a customImage node is selected
-      if (
-        selection instanceof NodeSelection &&
-        selection.node.type.name === "customImage"
-      ) {
-        commands.updateAttributes("customImage", {
-          ...selection.node.attrs,
-          ...attrs,
-        });
-      } else {
-        // If no image is selected, try to find and update the last inserted image
-        const { tr } = state;
-        const customImageNodes: Array<{ node: { type: { name: string }; attrs: Record<string, unknown> }; pos: number }> = [];
-        
-        tr.doc.descendants((node, pos) => {
-          if (node.type.name === "customImage") {
-            customImageNodes.push({ node, pos });
-          }
-        });
+      if (selection instanceof NodeSelection && selection.node.type.name === "customImage") {
+        const pos = selection.$anchor.pos;
+        const node = selection.node;
+        const newAttrs = { ...node.attrs, ...attrs };
 
-        if (customImageNodes.length > 0) {
-          // Update the last customImage node
-          const lastImage = customImageNodes[customImageNodes.length - 1];
-          const newAttrs = { ...lastImage.node.attrs, ...attrs };
-          
-          commands.updateAttributes("customImage", newAttrs);
-        }
+        const tr = state.tr.setNodeMarkup(pos, undefined, newAttrs);
+        view.dispatch(tr);
       }
     },
     [editor]
@@ -169,181 +135,116 @@ export default function TiptapEditor({ content, onChange }: Props) {
 
   return (
     <div className="space-y-3">
-      {/* Text Editing Area */}
-      <div className="space-y-2">
-        <h3 className="text-lg font-semibold text-gray-700">Text Editing</h3>
-        <div className="flex gap-4 items-center flex-wrap border p-2 rounded bg-muted/30">
-          {/* Text Alignment Group */}
-          <div className="flex items-center gap-2">
+      {/* Toolbar */}
+      <div className="border rounded-lg p-3 bg-gray-50">
+        <div className="flex flex-wrap gap-3 items-center">
+          {/* Text Formatting */}
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => editor?.chain().focus().toggleBold().run()}
+              className={`p-2 rounded hover:bg-gray-200 ${
+                editor?.isActive("bold") ? "bg-blue-100 text-blue-600" : ""
+              }`}
+              title="Bold"
+            >
+              <Bold size={16} />
+            </button>
+            <button
+              type="button"
+              onClick={() => editor?.chain().focus().toggleItalic().run()}
+              className={`p-2 rounded hover:bg-gray-200 ${
+                editor?.isActive("italic") ? "bg-blue-100 text-blue-600" : ""
+              }`}
+              title="Italic"
+            >
+              <Italic size={16} />
+            </button>
+            <button
+              type="button"
+              onClick={() => editor?.chain().focus().toggleUnderline().run()}
+              className={`p-2 rounded hover:bg-gray-200 ${
+                editor?.isActive("underline") ? "bg-blue-100 text-blue-600" : ""
+              }`}
+              title="Underline"
+            >
+              <UnderlineIcon size={16} />
+            </button>
+            <button
+              type="button"
+              onClick={() => editor?.chain().focus().toggleStrike().run()}
+              className={`p-2 rounded hover:bg-gray-200 ${
+                editor?.isActive("strike") ? "bg-blue-100 text-blue-600" : ""
+              }`}
+              title="Strikethrough"
+            >
+              <Strikethrough size={16} />
+            </button>
+          </div>
+
+          {/* Separator */}
+          <div className="w-px h-6 bg-gray-300"></div>
+
+          {/* Text Alignment */}
+          <div className="flex items-center gap-1">
             <button
               type="button"
               onClick={() => editor?.chain().focus().setTextAlign("left").run()}
-              className="text-sm px-2 py-1 hover:border rounded"
+              className={`p-2 rounded hover:bg-gray-200 ${
+                editor?.isActive({ textAlign: "left" }) ? "bg-blue-100 text-blue-600" : ""
+              }`}
+              title="Align Left"
             >
-              <AlignLeft size={20} />
+              <AlignLeft size={16} />
             </button>
             <button
               type="button"
-              onClick={() =>
-                editor?.chain().focus().setTextAlign("center").run()
-              }
-              className="text-sm px-2 py-1 hover:border rounded"
+              onClick={() => editor?.chain().focus().setTextAlign("center").run()}
+              className={`p-2 rounded hover:bg-gray-200 ${
+                editor?.isActive({ textAlign: "center" }) ? "bg-blue-100 text-blue-600" : ""
+              }`}
+              title="Align Center"
             >
-              <AlignCenter size={20} />
+              <AlignCenter size={16} />
             </button>
             <button
               type="button"
-              onClick={() =>
-                editor?.chain().focus().setTextAlign("right").run()
-              }
-              className="text-sm px-2 py-1 hover:border rounded"
+              onClick={() => editor?.chain().focus().setTextAlign("right").run()}
+              className={`p-2 rounded hover:bg-gray-200 ${
+                editor?.isActive({ textAlign: "right" }) ? "bg-blue-100 text-blue-600" : ""
+              }`}
+              title="Align Right"
             >
-              <AlignRight size={20} />
+              <AlignRight size={16} />
             </button>
           </div>
-        </div>
 
-        {/* Image Management - Simplified */}
-        <div className="space-y-2">
-          <h3 className="text-lg font-semibold text-gray-700">
-            Image Management
-          </h3>
-          <div className="flex gap-4 items-center flex-wrap border p-2 rounded bg-muted/30">
-            {/* Image Upload */}
-            <div className="flex items-center gap-2">
-              <label
-                htmlFor="editor-image-upload"
-                className="text-sm p-2 border rounded cursor-pointer inline-block hover:bg-gray-100"
-              >
-                <ImagePlus size={16} className="inline mr-1" />
-                Upload
-              </label>
-              <input
-                id="editor-image-upload"
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-              />
-            </div>
+          {/* Separator */}
+          <div className="w-px h-6 bg-gray-300"></div>
 
-            {/* Image Size */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm">Size:</span>
-              <input
-                id="image-width"
-                type="range"
-                min={100}
-                max={800}
-                value={selectedWidth}
-                onChange={(e) => {
-                  setSelectedWidth(e.target.value);
-                  updateImageAttrs({ width: `${e.target.value}px` });
-                }}
-                className="w-20"
-              />
-              <span className="text-sm">{selectedWidth}px</span>
-            </div>
-
-            {/* Layout */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm">Layout:</span>
-              <button
-                type="button"
-                onClick={() => {
-                  setSelectedLayout("single");
-                  updateImageAttrs({ layout: "single" });
-                }}
-                className={`text-sm px-2 py-1 border rounded ${
-                  selectedLayout === "single" ? "bg-blue-100" : ""
-                }`}
-                title="Single Column"
-              >
-                <Layout size={16} />
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setSelectedLayout("double");
-                  updateImageAttrs({ layout: "double" });
-                }}
-                className={`text-sm px-2 py-1 border rounded ${
-                  selectedLayout === "double" ? "bg-blue-100" : ""
-                }`}
-                title="Two Columns"
-              >
-                <Columns size={16} />
-              </button>
-            </div>
-
-            {/* Image Position (Only shown when two columns) */}
-            {selectedLayout === "double" && (
-              <div className="flex items-center gap-2">
-                <span className="text-sm">Position:</span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedPosition("left");
-                    updateImageAttrs({ position: "left" });
-                  }}
-                  className={`text-sm px-2 py-1 border rounded ${
-                    selectedPosition === "left" ? "bg-green-100" : ""
-                  }`}
-                  title="Image Left"
-                >
-                  <ArrowLeft size={16} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedPosition("right");
-                    updateImageAttrs({ position: "right" });
-                  }}
-                  className={`text-sm px-2 py-1 border rounded ${
-                    selectedPosition === "right" ? "bg-green-100" : ""
-                  }`}
-                  title="Image Right"
-                >
-                  <ArrowRight size={16} />
-                </button>
-              </div>
-            )}
+          {/* Image Upload */}
+          <div className="flex items-center gap-1">
+            <label
+              htmlFor="editor-image-upload"
+              className="p-2 rounded hover:bg-gray-200 cursor-pointer"
+              title="Upload Image"
+            >
+              <ImagePlus size={16} />
+            </label>
+            <input
+              id="editor-image-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+            />
           </div>
-
-          {/* Text Input (Only shown when two columns) */}
-          {selectedLayout === "double" && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm">Text:</span>
-              <textarea
-                value={textContent}
-                onChange={(e) => {
-                  setTextContent(e.target.value);
-                  // Don't update image attributes immediately to prevent duplication
-                }}
-                onBlur={(e) => {
-                  // Only update when user finishes editing
-                  updateImageAttrs({ textContent: e.target.value });
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && e.ctrlKey) {
-                    // Update when user presses Ctrl+Enter
-                    updateImageAttrs({ textContent: e.currentTarget.value });
-                    e.currentTarget.blur(); // Remove focus
-                  }
-                }}
-                placeholder="Enter text... (Ctrl+Enter to save)"
-                className="px-2 py-1 border rounded w-60 resize-none"
-                style={{ fontSize: '1.125rem', lineHeight: '1.6' }}
-                rows={3}
-              />
-            </div>
-          )}
-        </div>
-        {/* Editor */}
-        <div className="editor-wrapper clearfix">
-          <EditorContent editor={editor} />
         </div>
       </div>
+
+      {/* Editor Content */}
+      <EditorContent editor={editor} />
+
     </div>
   );
 }

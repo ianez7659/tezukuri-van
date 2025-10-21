@@ -124,7 +124,7 @@ export default function AdminEventsPage() {
       )}
 
       {events.map((event) => (
-        <div key={event.id} className="border rounded p-4 mb-4 shadow">
+        <div key={event.id} className="border rounded-lg p-6 mb-6 shadow">
           {editingEvent?.id === event.id ? (
             <EventForm
               initialEvent={event}
@@ -133,23 +133,50 @@ export default function AdminEventsPage() {
             />
           ) : (
             <>
-              <h2 className="text-lg font-semibold">{event.title}</h2>
-              <p className="text-sm text-gray-500 mb-2">
-                {event.start_date} ~ {event.end_date}
-              </p>
-              {event.image_url && (
-                <Image
-                  src={event.image_url}
-                  alt={event.title}
-                  width={300}
-                  height={200}
-                  className="w-full max-w-sm rounded mb-2"
-                />
-              )}
-              <div
-                className="prose"
-                dangerouslySetInnerHTML={{ __html: event.description }}
-              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                {/* image column */}
+                <div className="order-2 md:order-1">
+                  {event.image_url ? (
+                    <Image
+                      src={event.image_url}
+                      alt={event.title}
+                      width={400}
+                      height={300}
+                      className="w-full h-64 md:h-80 object-cover rounded-lg"
+                    />
+                  ) : (
+                    <div className="w-full h-64 md:h-80 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                      <span className="text-gray-500 dark:text-gray-400">No Image</span>
+                    </div>
+                  )}
+                </div>
+                
+                {/* text column */}
+                <div className="order-1 md:order-2 flex flex-col justify-center">
+                  <h2 className="text-xl md:text-2xl font-bold">{event.title}</h2>
+                  
+                  <p className="text-base text-gray-600 dark:text-gray-400 mb-4 font-bold">
+                    {new Date(event.start_date).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      hour12: true
+                    })} ~ {new Date(event.end_date).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      hour12: true
+                    })}
+                  </p>
+                  
+                  <div
+                    className="event-description text-sm text-gray-700 dark:text-gray-300 leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: event.description }}
+                  />
+                </div>
+              </div>
 
               <div className="flex gap-2 mt-4">
                 <button

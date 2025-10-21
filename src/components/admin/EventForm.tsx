@@ -93,103 +93,108 @@ export default function EventForm({ initialEvent, onSaved, onCancel }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 p-4 border rounded bg-[var(--background)] text-[var(--foreground)]"
+      className="space-y-6 p-6 border rounded-lg bg-[var(--background)] text-[var(--foreground)]"
     >
-      <h2 className="text-lg font-semibold">Create Event</h2>
+      <h2 className="text-xl font-semibold mb-6">Create Event</h2>
 
-      <div>
-        <label className="block text-sm font-medium">Title</label>
-        <input
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          className="w-full border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-1 rounded text-[var(--foreground)]"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="block text-sm font-medium mb-1">Main Image</label>
-
-        <div className="flex flex-wrap items-center gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* 이미지 컬럼 */}
+        <div className="space-y-4">
+          <label className="block text-sm font-medium">Event Image</label>
+          
           {/* Image preview */}
-          {formData.image_url && (
+          {formData.image_url ? (
             <img
               src={formData.image_url}
               alt="preview"
-              className="w-24 h-24 object-cover rounded border"
+              className="w-full h-64 md:h-80 object-cover rounded-lg border"
             />
+          ) : (
+            <div className="w-full h-64 md:h-80 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600">
+              <span className="text-gray-500 dark:text-gray-400">No Image Selected</span>
+            </div>
           )}
 
-          <div className="flex flex-col gap-2 max-w-xs flex-1">
-            {/* Upload Button*/}
-            <label
-              htmlFor="main-image-upload"
-              className="cursor-pointer bg-[var(--background)] text-[var(--foreground)] text-sm text-center px-4 py-2 rounded border 
-           border-[var(--foreground)] hover:bg-black hover:text-white transition-colors"
-            >
-              Upload Image
-            </label>
+          {/* Upload Button */}
+          <label
+            htmlFor="main-image-upload"
+            className="cursor-pointer bg-[var(--background)] text-[var(--foreground)] text-sm text-center px-4 py-2 rounded border border-[var(--foreground)] hover:bg-black hover:text-white transition-colors block"
+          >
+            Upload Image
+          </label>
 
-            <input
-              id="main-image-upload"
-              type="file"
-              accept="image/*"
-              onChange={async (e) => {
-                const file = e.target.files?.[0];
-                if (!file) return;
-                const url = await uploadImage(file);
-                if (url) {
-                  setFormData((prev) => ({ ...prev, image_url: url }));
-                }
-              }}
-              className="hidden"
-            />
+          <input
+            id="main-image-upload"
+            type="file"
+            accept="image/*"
+            onChange={async (e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              const url = await uploadImage(file);
+              if (url) {
+                setFormData((prev) => ({ ...prev, image_url: url }));
+              }
+            }}
+            className="hidden"
+          />
 
-            {/* Image path */}
+          {/* Image URL input */}
+          <input
+            name="image_url"
+            value={formData.image_url}
+            onChange={handleChange}
+            placeholder="or enter image URL manually"
+            className="w-full border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2 rounded text-[var(--foreground)] text-sm"
+          />
+        </div>
+
+        {/* 텍스트 컬럼 */}
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">Title</label>
             <input
-              name="image_url"
-              value={formData.image_url}
+              name="title"
+              value={formData.title}
               onChange={handleChange}
-              placeholder="or enter image URL manually"
-              className="border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-1 rounded text-[var(--foreground)] text-sm"
+              className="w-full border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2 rounded text-[var(--foreground)]"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Start Date</label>
+            <input
+              type="datetime-local"
+              name="start_date"
+              value={formData.start_date}
+              onChange={handleChange}
+              className="w-full border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2 rounded text-[var(--foreground)]"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">End Date</label>
+            <input
+              type="datetime-local"
+              name="end_date"
+              value={formData.end_date}
+              onChange={handleChange}
+              className="w-full border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2 rounded text-[var(--foreground)]"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Description</label>
+            <TiptapEditor
+              content={formData.description}
+              onChange={(html) =>
+                setFormData((prev) => ({ ...prev, description: html }))
+              }
             />
           </div>
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium">Start Date</label>
-        <input
-          type="datetime-local"
-          name="start_date"
-          value={formData.start_date}
-          onChange={handleChange}
-          className="w-full border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-1 rounded text-[var(--foreground)]"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium">End Date</label>
-        <input
-          type="datetime-local"
-          name="end_date"
-          value={formData.end_date}
-          onChange={handleChange}
-          className="w-full border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-1 rounded text-[var(--foreground)]"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium mb-1">Description</label>
-        <TiptapEditor
-          content={formData.description}
-          onChange={(html) =>
-            setFormData((prev) => ({ ...prev, description: html }))
-          }
-        />
-      </div>
-
-      <div className="flex gap-2">
+      <div className="flex gap-2 pt-4">
         <button
           type="submit"
           disabled={loading}

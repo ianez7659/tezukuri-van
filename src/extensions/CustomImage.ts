@@ -44,7 +44,17 @@ export const CustomImage = Node.create({
         getAttrs: (el) => {
           const container = el as HTMLElement;
           const img = container.querySelector("img[data-custom-image]") as HTMLImageElement;
+          const textDiv = container.querySelector("div[data-text-content]") as HTMLElement;
+          
           if (!img) return false;
+          
+          // Get text content from the div or from data attribute
+          let textContent = "";
+          if (textDiv) {
+            textContent = textDiv.textContent || textDiv.innerHTML || "";
+          } else {
+            textContent = container.getAttribute("data-text-content") || "";
+          }
           
           return {
             src: img.getAttribute("src"),
@@ -54,7 +64,26 @@ export const CustomImage = Node.create({
             align: img.style.float || "center",
             layout: container.getAttribute("data-layout") || "single",
             position: container.getAttribute("data-position") || "left",
-            textContent: container.getAttribute("data-text-content") || "",
+            textContent: textContent,
+          };
+        },
+      },
+      // Also parse single column images
+      {
+        tag: "img[data-custom-image]",
+        getAttrs: (el) => {
+          const img = el as HTMLImageElement;
+          const container = img.closest("div") as HTMLElement;
+          
+          return {
+            src: img.getAttribute("src"),
+            alt: img.getAttribute("alt"),
+            title: img.getAttribute("title"),
+            width: img.style.width || "300px",
+            align: img.style.float || "center",
+            layout: container?.getAttribute("data-layout") || "single",
+            position: "left",
+            textContent: "",
           };
         },
       },
@@ -81,8 +110,13 @@ export const CustomImage = Node.create({
 
       const textStyle = `
         font-size: 1.125rem;
+        line-height: 1.6;
+        color: #374151;
+        padding: 0.5rem;
         white-space: pre-wrap;
         word-wrap: break-word;
+        min-height: 2rem;
+        background-color: transparent;
       `;
 
       const imageElement = [
@@ -96,6 +130,7 @@ export const CustomImage = Node.create({
         }),
       ];
 
+      // Create text element - simple text only
       const textElement = [
         "div",
         {
@@ -124,7 +159,7 @@ export const CustomImage = Node.create({
         ...elements,
       ];
     } else {
-      // Single column layout (same as before)
+      // Single column layout
       const containerStyle = `
         text-align: ${align};
         margin: 1rem 0;
