@@ -3,16 +3,11 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
-import { useCallback, useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
-import { CustomImage } from "@/extensions/CustomImage";
-import { NodeSelection } from "prosemirror-state";
 import TextAlign from "@tiptap/extension-text-align";
 import {
   AlignCenter,
   AlignLeft,
   AlignRight,
-  ImagePlus,
   Bold,
   Italic,
   Underline as UnderlineIcon,
@@ -25,11 +20,6 @@ type Props = {
 };
 
 export default function TiptapEditor({ content, onChange }: Props) {
-  const [selectedWidth, setSelectedWidth] = useState("300");
-  const [selectedLayout, setSelectedLayout] = useState("single");
-  const [selectedPosition, setSelectedPosition] = useState("left");
-  const [textContent, setTextContent] = useState("");
-  const [plainText, setPlainText] = useState("");
 
   const editor = useEditor({
     extensions: [
@@ -49,12 +39,11 @@ export default function TiptapEditor({ content, onChange }: Props) {
         types: ["heading", "paragraph"],
       }),
       Underline,
-      CustomImage,
     ],
     content,
     immediatelyRender: false,
-    onUpdate({ editor }) {
-      onChange(editor.getHTML());
+    onUpdate({ editor: editorInstance }) {
+      onChange(editorInstance.getHTML());
     },
     editorProps: {
       attributes: {
@@ -65,7 +54,6 @@ export default function TiptapEditor({ content, onChange }: Props) {
         if (event.key === 'Enter' && !event.shiftKey) {
           // Insert a hard break instead of paragraph
           const { state, dispatch } = view;
-          const { selection } = state;
           
           const tr = state.tr.replaceSelectionWith(state.schema.nodes.hardBreak.create());
           dispatch(tr);
@@ -76,60 +64,6 @@ export default function TiptapEditor({ content, onChange }: Props) {
     },
   });
 
-  const updateImageAttrs = useCallback(
-    (attrs: Record<string, any>) => {
-      if (!editor) return;
-
-      const { state, view } = editor;
-      const { selection } = state;
-
-      if (selection instanceof NodeSelection && selection.node.type.name === "customImage") {
-        const pos = selection.$anchor.pos;
-        const node = selection.node;
-        const newAttrs = { ...node.attrs, ...attrs };
-
-        const tr = state.tr.setNodeMarkup(pos, undefined, newAttrs);
-        view.dispatch(tr);
-      }
-    },
-    [editor]
-  );
-
-  const uploadImage = useCallback(
-    async (file: File) => {
-      const filePath = `events/${Date.now()}-${file.name}`;
-      const { error } = await supabase.storage
-        .from("product-images")
-        .upload(filePath, file);
-
-      if (error) {
-        alert("Image upload failed");
-        return;
-      }
-
-      const { data } = supabase.storage
-        .from("product-images")
-        .getPublicUrl(filePath);
-
-      editor?.commands.focus();
-      editor?.commands.insertCustomImage({
-        src: data?.publicUrl ?? "",
-        width: "300px",
-        align: "center",
-        layout: "single",
-        position: "left",
-        textContent: "",
-      });
-    },
-    [editor]
-  );
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      uploadImage(file);
-    }
-  };
 
   if (!editor) return null;
 
@@ -217,27 +151,6 @@ export default function TiptapEditor({ content, onChange }: Props) {
             >
               <AlignRight size={16} />
             </button>
-          </div>
-
-          {/* Separator */}
-          <div className="w-px h-6 bg-gray-300"></div>
-
-          {/* Image Upload */}
-          <div className="flex items-center gap-1">
-            <label
-              htmlFor="editor-image-upload"
-              className="p-2 rounded hover:bg-gray-200 cursor-pointer"
-              title="Upload Image"
-            >
-              <ImagePlus size={16} />
-            </label>
-            <input
-              id="editor-image-upload"
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-            />
           </div>
         </div>
       </div>
