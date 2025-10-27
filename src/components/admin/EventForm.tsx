@@ -14,8 +14,8 @@ type Event = {
   title: string;
   description: string;
   image_url: string;
-  start_date: string;
-  end_date: string;
+  start_date?: string;
+  end_date?: string;
 };
 
 type Props = {
@@ -61,8 +61,8 @@ export default function EventForm({ initialEvent, onSaved, onCancel }: Props) {
       title: formData.title,
       description: formData.description,
       image_url: formData.image_url,
-      start_date: formData.start_date,
-      end_date: formData.end_date,
+      ...(formData.start_date && { start_date: formData.start_date }),
+      ...(formData.end_date && { end_date: formData.end_date }),
     };
 
     let error = null;
@@ -161,7 +161,7 @@ export default function EventForm({ initialEvent, onSaved, onCancel }: Props) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Start Date</label>
+            <label className="block text-sm font-medium mb-2">Start Date (Optional)</label>
             <input
               type="datetime-local"
               name="start_date"
@@ -172,7 +172,7 @@ export default function EventForm({ initialEvent, onSaved, onCancel }: Props) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">End Date</label>
+            <label className="block text-sm font-medium mb-2">End Date (Optional)</label>
             <input
               type="datetime-local"
               name="end_date"

@@ -109,14 +109,20 @@ export default async function EventsPage() {
                 <div className="order-1 md:order-2 flex flex-col justify-center">
                   <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{event.title}</h2>
                   
-                  <div className="mb-6 mt-2">
-                    <p className="font-bold text-lg text-gray-900">
-                      {formatEventDate(event.start_date, event.end_date)}
-                    </p>
-                    <p className="text-base text-gray-700">
-                      {formatEventTime(event.start_date, event.end_date)}
-                    </p>
-                  </div>
+                  {(event.start_date || event.end_date) && (
+                    <div className="mb-6 mt-2">
+                      {event.start_date && event.end_date && (
+                        <>
+                          <p className="font-bold text-lg text-gray-900">
+                            {formatEventDate(event.start_date, event.end_date)}
+                          </p>
+                          <p className="text-lg font-bold text-gray-900">
+                            {formatEventTime(event.start_date, event.end_date)}
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  )}
                   
                   <div
                     className="event-description text-base text-gray-900 leading-relaxed"

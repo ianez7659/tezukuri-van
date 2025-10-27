@@ -210,14 +210,16 @@ export default function AdminEventsPage() {
                 <div className="order-1 md:order-2 flex flex-col justify-center">
                   <h2 className="text-2xl md:text-3xl font-bold">{event.title}</h2>
                   
-                  <div className="mb-4 mt-2">
-                    <h3 className="text-lg text-base text-gray-900 font-bold">
-                      {formatEventDate(event.start_date, event.end_date)}
-                    </h3>
-                    <h3 className=" text-base text-gray-700">
-                      {formatEventTime(event.start_date, event.end_date)}
-                    </h3>
-                  </div>
+                  {event.start_date && event.end_date && (
+                    <div className="mb-4 mt-2">
+                      <h3 className="text-lg text-gray-900 font-bold">
+                        {formatEventDate(event.start_date, event.end_date)}
+                      </h3>
+                      <h3 className=" text-lg font-bold text-gray-900">
+                        {formatEventTime(event.start_date, event.end_date)}
+                      </h3>
+                    </div>
+                  )}
                   
                   <div
                     className="event-description text-sm text-gray-700 dark:text-gray-300 leading-relaxed"
