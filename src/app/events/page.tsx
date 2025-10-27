@@ -32,7 +32,7 @@ export default async function EventsPage() {
           {events.map((event) => (
             <div
               key={event.id}
-              className="border rounded-lg p-6 shadow bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+              className="border rounded-lg p-6 shadow bg-white text-gray-900"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* image column */}
@@ -52,9 +52,9 @@ export default async function EventsPage() {
                 
                 {/* text column */}
                 <div className="order-1 md:order-2 flex flex-col justify-center">
-                  <h2 className="text-2xl md:text-3xl font-bold">{event.title}</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{event.title}</h2>
                   
-                  <p className="mb-6 font-bold text-lg text-black">
+                  <p className="mb-6 font-bold text-lg text-gray-900">
                     {new Date(event.start_date).toLocaleDateString('en-US', {
                       month: 'short',
                       day: 'numeric',
@@ -72,7 +72,7 @@ export default async function EventsPage() {
                   </p>
                   
                   <div
-                    className="event-description text-base text-gray-700 dark:text-gray-300 leading-relaxed"
+                    className="event-description text-base text-gray-900 leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: event.description }}
                   />
                 </div>
