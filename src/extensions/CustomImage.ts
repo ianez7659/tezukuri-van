@@ -111,7 +111,7 @@ export const CustomImage = Node.create({
       const textStyle = `
         font-size: 1.125rem;
         line-height: 1.6;
-        color: #374151;
+        color: inherit;
         padding: 0.5rem;
         white-space: pre-wrap;
         word-wrap: break-word;

@@ -101,6 +101,7 @@ div[data-text-content="true"] {
   background-color: transparent !important;
   border: none !important;
   border-radius: 0 !important;
+  color: inherit !important;
 }
 
 /* Style line breaks in event descriptions */
