@@ -27,6 +27,61 @@ const emptyEvent: Event = {
   end_date: "",
 };
 
+// Helper function to format dates as "November 15th ~ 16th, 2025"
+function formatEventDate(startDate: string, endDate: string): string {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  
+  const startMonth = start.toLocaleDateString('en-US', { month: 'long' });
+  const startDay = start.getDate();
+  const startYear = start.getFullYear();
+  
+  const endDay = end.getDate();
+  const endYear = end.getFullYear();
+  
+  // Get ordinal suffix (1st, 2nd, 3rd, 4th, etc.)
+  const getOrdinalSuffix = (day: number) => {
+    if (day > 3 && day < 21) return 'th';
+    switch (day % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  };
+  
+  const startSuffix = getOrdinalSuffix(startDay);
+  const endSuffix = getOrdinalSuffix(endDay);
+  
+  // If same year, only show year at the end
+  if (startYear === endYear) {
+    return `${startMonth} ${startDay}${startSuffix} ~ ${endDay}${endSuffix}, ${startYear}`;
+  } else {
+    const endMonth = end.toLocaleDateString('en-US', { month: 'long' });
+    return `${startMonth} ${startDay}${startSuffix}, ${startYear} ~ ${endMonth} ${endDay}${endSuffix}, ${endYear}`;
+  }
+}
+
+// Helper function to format time as "10:00 am to 5:00 pm"
+function formatEventTime(startDate: string, endDate: string): string {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  
+  const startTime = start.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
+  
+  const endTime = end.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
+  
+  return `${startTime} to ${endTime}`;
+}
+
 export default function AdminEventsPage() {
   const { user, loading: userLoading } = useUser();
   const [events, setEvents] = useState<Event[]>([]);
@@ -153,23 +208,16 @@ export default function AdminEventsPage() {
                 
                 {/* text column */}
                 <div className="order-1 md:order-2 flex flex-col justify-center">
-                  <h2 className="text-xl md:text-2xl font-bold">{event.title}</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold">{event.title}</h2>
                   
-                  <p className="text-base text-gray-600 dark:text-gray-400 mb-4 font-bold">
-                    {new Date(event.start_date).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: '2-digit',
-                      hour12: true
-                    })} ~ {new Date(event.end_date).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: '2-digit',
-                      hour12: true
-                    })}
-                  </p>
+                  <div className="mb-4 mt-2">
+                    <h3 className="text-lg text-base text-gray-900 font-bold">
+                      {formatEventDate(event.start_date, event.end_date)}
+                    </h3>
+                    <h3 className=" text-base text-gray-700">
+                      {formatEventTime(event.start_date, event.end_date)}
+                    </h3>
+                  </div>
                   
                   <div
                     className="event-description text-sm text-gray-700 dark:text-gray-300 leading-relaxed"
