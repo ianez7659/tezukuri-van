@@ -61,8 +61,8 @@ export default function EventsList({ events }: Props) {
                     className="w-full h-64 md:h-80 object-cover rounded-lg"
                   />
                 ) : (
-                  <div className="w-full h-64 md:h-80 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                    <span className="text-gray-500 dark:text-gray-400">No Image</span>
+                  <div className="w-full h-64 md:h-80 bg-gray-200 rounded-lg flex items-center justify-center">
+                    <span className="text-gray-500">No Image</span>
                   </div>
                 )}
               </div>
