@@ -15,7 +15,7 @@ export default function AnimatedEvents({ children }: Props) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="w-full px-4 sm:px-6 md:px-8 lg:px-12 max-w-screen-xl mx-auto">
+      <div className="w-full px-4 sm:px-6 md:px-0 max-w-screen-xl mx-auto">
         {children}
       </div>
     </motion.main>
